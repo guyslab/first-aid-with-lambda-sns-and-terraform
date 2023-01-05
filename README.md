@@ -2,6 +2,8 @@
 
 Demonstration of AWS-provided serverless setup for simulating a distrbuted transaction.
 
+For extensive review and implementation details, please see the [attached atricle](https://medium.com/@guy.signer/first-aid-with-lambda-sns-and-terraform-c23b3d3a84b8).
+
 ## Background
 
 Imagine walking on the street and suddenly encountering a person choking with stress, and then becoming unresponsive.
@@ -30,47 +32,6 @@ To simulate it, we will mock the following behaviour:
 1. Emergency call and physical aid start simulatnously.
 2. The emergency help arrives after 4 seconds, even if the patient is breathing before that.
 3. The physical aid would have managed to restore breathing after 10 seconds, but the arrival of emergency team had completed the procedure.
-
-## Design
-
-We design a distributed system, deployed on serverless environment on AWS.
-The long-running transaction of preserving intact brain function is managed by Saga pattern. Saga pattern provides transaction management using a sequence of local transactions.
-While Saga requires that failures during the transaction will be handled (such as by rollbacks), we will take only a happy path here for the purpose of demonstration.
-
-[AWS Lambda](https://aws.amazon.com/lambda/) functions are used to simulate those local transactions (such as instructing the adaptor to perform operations on the ground).
-
-**All the communication between the worker functions is asynchronous and done via message broker as follows.**
-
-[Amazon SNS](https://aws.amazon.com/sns/) is used as a messaging solution, for the components to publish and subscribe to domain events. 
-
-Node.JS is used for applicative runtime to simulate the logic.
-
-[Terraform](https://www.terraform.io/) is used to provision the serverless infrastructure on the AWS cloud.
-
-> Important: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the AWS Pricing page for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.
-
-### Components
-
-The following components take part in the desired technical flow:
-
-* physical_aid_worker - to instruct the physical device for physical actions on the patient. The service will handle:
-    1. Checking vital signs and breathing
-    2. Performing CPR
-    3. Notifying about patient status
-* remote_aid_worker - to communicate with third party emergency services. The service will handle:
-    1. Calling for help
-    2. Notifying when help arrives
-* first_aid_worker - to orchestrate the first aid process and communicate with the two above workers until the end of the procedure
-
-### Domain events
-
-The following events will control the execution:
-
-* FIRST_AID_STARTED
-* PHYSICAL_AID_GIVEN_PATIENT_UNRESPONSIVE
-* PHYSICAL_AID_GIVEN_PATIENT_BREATHES
-* HELP_ARRIVED
-* FIRST_AID_COMPLETED
 
 ## Get Started
 1. Install Terraform
