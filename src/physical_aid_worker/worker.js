@@ -22,6 +22,9 @@ exports.handler = async (event) => {
             await setTimeout(TEN_SECONDS);
             await publishPhysicalAidGivenPatientBreathes();
             break;   
+        case "FIRST_AID_COMPLETED":
+                console.log("First aid completed. Stoping physical aid");
+                break;   
         default:
             throw new Error("Bad event");
     }

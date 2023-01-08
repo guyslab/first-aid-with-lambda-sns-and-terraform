@@ -83,11 +83,11 @@ locals {
 }
 
 resource "aws_lambda_permission" "sns" {
-  for_each = toset(values(var.subscribe_to_topics_uris))
+  for_each = toset(keys(var.subscribe_to_topics_uris))
   action        = "lambda:InvokeFunction"
   function_name = var.function_name
   principal     = "sns.amazonaws.com"
-  source_arn    = "${each.key}"
+  source_arn    = "arn:aws:sns:${local.region}:${local.account_id}:${each.key}"
 }
 
 resource "aws_sns_topic_subscription" "lambda_subscription" {
