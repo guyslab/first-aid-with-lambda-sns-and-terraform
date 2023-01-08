@@ -14,3 +14,13 @@ variable "function_name" {
   description = "Key name to reference the function"
   type        = string
 }
+
+variable "source_dir" {
+  description = "Path of source files"
+  type        = string
+}
+
+variable "output_zip" {
+  description = "Path of output archive zip file"
+  type        = string
+}

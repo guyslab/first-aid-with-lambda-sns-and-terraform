@@ -16,8 +16,8 @@ resource "aws_lambda_function" "worker" {
 
 data "archive_file" "lambda_zip_file" {
   type        = "zip"
-  source_file = "${path.module}/../../src/${var.function_name}/worker.js"
-  output_path = "${path.module}/../../dist/${var.function_name}_lambda.zip"
+  source_file = "${var.source_dir}"
+  output_path = "${var.output_zip}"
 }
 
 data "aws_iam_policy" "lambda_basic_execution_role_policy" {
