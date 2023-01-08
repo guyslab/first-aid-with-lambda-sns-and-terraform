@@ -16,7 +16,7 @@ resource "aws_lambda_function" "worker" {
 
 data "archive_file" "lambda_zip_file" {
   type        = "zip"
-  source_file = "${var.source_dir}"
+  source_dir  = "${var.source_dir}"
   output_path = "${var.output_zip}"
 }
 

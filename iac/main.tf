@@ -39,7 +39,7 @@ module "physical_aid_worker" {
 
   function_name           = "physical_aid_worker"
   source_dir              = "${path.module}/../src/physical_aid_worker"
-  output_path             = "${path.module}/../dist/physical_aid_worker_lambda.zip"
+  output_zip              = "${path.module}/../dist/physical_aid_worker_lambda.zip"
   publish_to_topics_uris  = { 
     physical_aid_given_patient_unresponsive = "${aws_sns_topic.physical_aid_given_patient_unresponsive_topic.arn}"
     physical_aid_given_patient_breathes = "${aws_sns_topic.physical_aid_given_patient_breathes_topic.arn}"
@@ -55,7 +55,7 @@ module "remote_aid_worker" {
 
   function_name           = "remote_aid_worker"
   source_dir              = "${path.module}/../src/remote_aid_worker"
-  output_path             = "${path.module}/../dist/remote_aid_worker.zip"
+  output_zip              = "${path.module}/../dist/remote_aid_worker.zip"
   publish_to_topics_uris  = { 
     help_arrived = "${aws_sns_topic.help_arrived_topic.arn}"
   }
@@ -69,7 +69,7 @@ module "first_aid_worker" {
 
   function_name           = "first_aid_worker"
   source_dir              = "${path.module}/../src/first_aid_worker"
-  output_path             = "${path.module}/../dist/first_aid_worker.zip"
+  output_zip              = "${path.module}/../dist/first_aid_worker.zip"
   publish_to_topics_uris  = { 
     first_aid_started = "${aws_sns_topic.first_aid_started_topic.arn}"
     first_aid_completed = "${aws_sns_topic.first_aid_completed_topic.arn}"
